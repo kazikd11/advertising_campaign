@@ -23,11 +23,12 @@ public class User {
     private Long id;
 
     @NotBlank
+    @Column(unique = true, nullable = false)
     private String username;
 
     @NotNull
     @DecimalMin("0.00")
-    private BigDecimal balance;
+    private BigDecimal balance = BigDecimal.ZERO;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Product> products = new ArrayList<>();
