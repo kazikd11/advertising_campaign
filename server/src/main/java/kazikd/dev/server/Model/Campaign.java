@@ -49,8 +49,7 @@ public class Campaign {
     private boolean isActive = false;
 
     @ManyToOne
-    @NotNull
-    @JoinColumn(name = "town_id", nullable = false)
+    @JoinColumn(name = "town_id")
     private Town town;
 
     @NotNull
