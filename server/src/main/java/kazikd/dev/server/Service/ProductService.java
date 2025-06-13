@@ -30,9 +30,13 @@ public class ProductService {
         productRepo.save(product);
     }
 
-    public void deleteProduct(Long productId) {
+    public void deleteProduct(Long userId, Long productId) {
         Product product = productRepo.findById(productId)
                 .orElseThrow(() -> new ProductNotFoundException("Product not found"));
+
+        if (!product.getUser().getId().equals(userId)) {
+            throw new UserNotFoundException("User does not own this product");
+        }
 
         productRepo.delete(product);
     }

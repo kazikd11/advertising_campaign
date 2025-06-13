@@ -26,20 +26,21 @@ public class UserController {
         return ResponseEntity.ok(users);
     }
 
-    @GetMapping("/{userId}")
-    public ResponseEntity<User> getUserById(@PathVariable Long userId) {
-        User user = userService.getUserById(userId);
-        return ResponseEntity.ok(user);
-    }
-
     @PostMapping
     public ResponseEntity<String> createUser(@RequestParam String username) {
         userService.createUser(username);
         return ResponseEntity.status(HttpStatus.CREATED).body("User created successfully");
     }
 
-    @PutMapping("/{userId}/add-funds")
-    public ResponseEntity<User> addFundsForUser(@PathVariable Long userId, @RequestParam BigDecimal amount) {
+    @GetMapping("/me")
+    public ResponseEntity<User> getCurrentUserAndData(@RequestHeader("X-USER-ID") Long userId) {
+        User user = userService.getUserById(userId);
+        return ResponseEntity.ok(user);
+    }
+
+    @PutMapping("/add-funds")
+    public ResponseEntity<User> addFunds(@RequestHeader("X-USER-ID") Long userId,
+                                         @RequestParam BigDecimal amount) {
         return ResponseEntity.ok(userService.addFunds(userId, amount));
     }
 }

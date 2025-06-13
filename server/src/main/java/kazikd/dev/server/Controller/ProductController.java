@@ -1,6 +1,5 @@
 package kazikd.dev.server.Controller;
 
-import kazikd.dev.server.Model.Product;
 import kazikd.dev.server.Service.ProductService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,15 +16,16 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<String> createProduct(@RequestParam Long userId, @RequestParam String name) {
+    public ResponseEntity<String> createProduct(@RequestHeader("X-USER-ID") Long userId,
+                                                @RequestParam String name) {
         productService.createProductForUser(userId, name);
         return ResponseEntity.status(HttpStatus.CREATED).body("Product created successfully");
     }
 
-
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteProduct(@PathVariable Long id) {
-        productService.deleteProduct(id);
+    public ResponseEntity<String> deleteProduct(@RequestHeader("X-USER-ID") Long userId,
+                                                @PathVariable Long productId) {
+        productService.deleteProduct(userId ,productId);
         return ResponseEntity.ok("Product deleted successfully");
     }
 }
