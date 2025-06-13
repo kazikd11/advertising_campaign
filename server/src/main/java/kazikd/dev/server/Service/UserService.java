@@ -4,6 +4,7 @@ import kazikd.dev.server.Exceptions.UserAlreadyExistsException;
 import kazikd.dev.server.Exceptions.UserBalanceException;
 import kazikd.dev.server.Exceptions.UserNotFoundException;
 import kazikd.dev.server.Model.User;
+import kazikd.dev.server.DTOs.UserSummaryDTO;
 import kazikd.dev.server.Repository.UserRepo;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -20,8 +21,13 @@ public class UserService {
         this.userRepo = userRepo;
     }
 
-    public List<User> getAllUsers() {
-        return userRepo.findAll();
+    public List<UserSummaryDTO> getAllUsers() {
+        return userRepo.findAll().stream().map(UserSummaryDTO::fromUser).toList();
+    }
+
+    public User getUserById(Long userId) {
+        return userRepo.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException("User not found with id: " + userId));
     }
 
     public void createUser(String name) {
