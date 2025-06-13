@@ -1,6 +1,5 @@
 package kazikd.dev.server.Controller;
 
-import kazikd.dev.server.DTOs.KeywordDTO;
 import kazikd.dev.server.Model.Keyword;
 import kazikd.dev.server.Model.Town;
 import kazikd.dev.server.Service.LookupService;
@@ -31,8 +30,8 @@ public class LookupController {
     }
 
     @GetMapping("/keywords")
-    public ResponseEntity<List<KeywordDTO>> getKeywords(@RequestParam(required = false) String query) {
-        List<KeywordDTO> keywords = lookupService.searchKeywords(query);
+    public ResponseEntity<List<Keyword>> getKeywords(@RequestParam(required = false) String query) {
+        List<Keyword> keywords = lookupService.searchKeywords(query);
         return ResponseEntity.ok(keywords);
     }
 }

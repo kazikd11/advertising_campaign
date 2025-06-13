@@ -1,6 +1,5 @@
 package kazikd.dev.server.Service;
 
-import kazikd.dev.server.DTOs.KeywordDTO;
 import kazikd.dev.server.Model.Keyword;
 import kazikd.dev.server.Model.Town;
 import kazikd.dev.server.Repository.KeywordRepo;
@@ -25,7 +24,7 @@ public class LookupService {
         return townRepo.findAll();
     }
 
-    public List<KeywordDTO> searchKeywords(String query) {
+    public List<Keyword> searchKeywords(String query) {
         List<Keyword> result;
         if (query == null || query.isBlank()) {
             result =  keywordRepo.findAll();
@@ -38,6 +37,6 @@ public class LookupService {
                     .distinct()
                     .toList();
         }
-        return result.stream().map(KeywordDTO::fromKeyword).toList();
+        return result;
     }
 }

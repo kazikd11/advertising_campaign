@@ -1,5 +1,6 @@
 package kazikd.dev.server.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
@@ -22,6 +23,7 @@ public class Keyword {
     @Column(unique = true, nullable = false)
     private String keyword;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "keywords")
     private Set<Campaign> campaigns = new HashSet<>();
 }
