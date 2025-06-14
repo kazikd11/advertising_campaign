@@ -1,16 +1,19 @@
-import { useState } from 'react'
-
+import { useState } from "react";
+import UserSelect from "./components/UserSelect";
+import ClientPanel from "./components/ClientPanel";
 
 function App() {
-  const [count, setCount] = useState(0)
+    const [user, setUser] = useState(null);
 
-  return (
-    <>
-      <p className="color-red-500 text-red-500">
-        test
-      </p>
-    </>
-  )
+    return (
+        <div className="container mx-auto p-4">
+            {!user ? (
+                <UserSelect onSelect={setUser} />
+            ) : (
+                <ClientPanel user={user} onLogout={() => setUser(null)} />
+            )}
+        </div>
+    );
 }
 
-export default App
+export default App;
