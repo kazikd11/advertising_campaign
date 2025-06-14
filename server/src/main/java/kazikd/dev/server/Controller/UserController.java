@@ -1,7 +1,6 @@
 package kazikd.dev.server.Controller;
 
 import kazikd.dev.server.DTOs.UserDetailsDTO;
-import kazikd.dev.server.Model.User;
 import kazikd.dev.server.DTOs.UserSummaryDTO;
 import kazikd.dev.server.Service.UserService;
 import org.springframework.http.HttpStatus;

@@ -2,7 +2,6 @@ package kazikd.dev.server.Controller;
 
 import kazikd.dev.server.DTOs.CampaignRequestDTO;
 import kazikd.dev.server.DTOs.CampaignResponseDTO;
-import kazikd.dev.server.Model.Campaign;
 import kazikd.dev.server.Service.CampaignService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

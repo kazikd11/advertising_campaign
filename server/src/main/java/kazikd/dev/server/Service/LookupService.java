@@ -3,7 +3,6 @@ package kazikd.dev.server.Service;
 import kazikd.dev.server.DTOs.KeywordDTO;
 import kazikd.dev.server.DTOs.TownDTO;
 import kazikd.dev.server.Model.Keyword;
-import kazikd.dev.server.Model.Town;
 import kazikd.dev.server.Repository.KeywordRepo;
 import kazikd.dev.server.Repository.TownRepo;
 import org.springframework.stereotype.Service;
@@ -28,6 +27,7 @@ public class LookupService {
                 .toList();
     }
 
+    // searches for towns with a query, first by exact match, then by starting with
     public List<KeywordDTO> searchKeywords(String query) {
         List<Keyword> result;
         if (query == null || query.isBlank()) {

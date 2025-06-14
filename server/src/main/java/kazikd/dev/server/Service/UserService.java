@@ -1,11 +1,11 @@
 package kazikd.dev.server.Service;
 
 import kazikd.dev.server.DTOs.UserDetailsDTO;
+import kazikd.dev.server.DTOs.UserSummaryDTO;
+import kazikd.dev.server.Exceptions.NotFoundException;
 import kazikd.dev.server.Exceptions.UserAlreadyExistsException;
 import kazikd.dev.server.Exceptions.UserException;
-import kazikd.dev.server.Exceptions.NotFoundException;
 import kazikd.dev.server.Model.User;
-import kazikd.dev.server.DTOs.UserSummaryDTO;
 import kazikd.dev.server.Repository.UserRepo;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -43,6 +43,7 @@ public class UserService {
         }
     }
 
+    // add funds and validate if it's greater than zero
     public UserDetailsDTO addFunds(Long userId, BigDecimal amount) {
         if (amount.compareTo(BigDecimal.ZERO) <= 0) {
             throw new UserException("Amount must be greater than zero");

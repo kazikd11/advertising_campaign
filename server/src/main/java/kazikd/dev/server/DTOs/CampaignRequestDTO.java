@@ -6,6 +6,7 @@ import lombok.Data;
 import java.math.BigDecimal;
 import java.util.Set;
 
+// DTO for creating or updating a campaign
 @Data
 public class CampaignRequestDTO {
     @NotNull

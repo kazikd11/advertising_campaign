@@ -14,6 +14,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+// manages crud for campaigns
 @Service
 public class CampaignService {
     private final CampaignRepo campaignRepo;
@@ -83,6 +84,9 @@ public class CampaignService {
         return CampaignResponseDTO.fromCampaign(updated);
     }
 
+    //dry methods
+
+    // populates the campaign with data from the request DTO and saves it to the repo
     private Campaign populateAndSaveCampaign(CampaignRequestDTO requestDTO, Town town, Set<Keyword> keywords, Campaign campaign) {
         campaign.setName(requestDTO.getName());
         campaign.setKeywords(keywords);
@@ -94,6 +98,7 @@ public class CampaignService {
         return campaignRepo.save(campaign);
     }
 
+    // validates user balance and updates it - deducts the fund amount from the user's balance
     private void validateAndSaveFundChange(User user, BigDecimal fund) {
         if (user.getBalance().compareTo(fund) < 0) {
             throw new UserException("Insufficient funds");
@@ -116,6 +121,7 @@ public class CampaignService {
         return keywords;
     }
 
+    // retrieves the campaign by ID and validates that the user owns the campaign's product
     private Campaign getAndValidateCampaign(Long campaignId, Long userId) {
         Campaign campaign = campaignRepo.findById(campaignId)
                 .orElseThrow(() -> new NotFoundException("Campaign not found"));

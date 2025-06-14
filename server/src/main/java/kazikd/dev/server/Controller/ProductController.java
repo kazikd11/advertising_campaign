@@ -1,7 +1,6 @@
 package kazikd.dev.server.Controller;
 
 import kazikd.dev.server.DTOs.ProductDTO;
-import kazikd.dev.server.Model.Product;
 import kazikd.dev.server.Service.ProductService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +28,7 @@ public class ProductController {
     @DeleteMapping("/{productId}")
     public ResponseEntity<String> deleteProduct(@RequestHeader("X-USER-ID") Long userId,
                                                 @PathVariable Long productId) {
-        productService.deleteProduct(userId ,productId);
+        productService.deleteProduct(userId, productId);
         return ResponseEntity.status(HttpStatus.CREATED).body("Product deleted successfully");
     }
 }

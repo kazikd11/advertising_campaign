@@ -2,9 +2,7 @@ package kazikd.dev.server.Model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
-import lombok.Data;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
@@ -31,9 +29,9 @@ public class Campaign {
 
     @ManyToMany
     @JoinTable(
-        name = "campaign_keywords",
-        joinColumns = @JoinColumn(name = "campaign_id"),
-        inverseJoinColumns = @JoinColumn(name = "keyword_id")
+            name = "campaign_keywords",
+            joinColumns = @JoinColumn(name = "campaign_id"),
+            inverseJoinColumns = @JoinColumn(name = "keyword_id")
     )
     @Size(min = 1)
     private Set<Keyword> keywords = new HashSet<>();

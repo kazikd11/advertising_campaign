@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface KeywordRepo extends JpaRepository<Keyword, Long> {
     List<Keyword> findByKeywordIgnoreCase(String keyword);
+
     List<Keyword> findByKeywordStartingWithIgnoreCase(String keyword);
 }

@@ -2,8 +2,6 @@ package kazikd.dev.server.Controller;
 
 import kazikd.dev.server.DTOs.KeywordDTO;
 import kazikd.dev.server.DTOs.TownDTO;
-import kazikd.dev.server.Model.Keyword;
-import kazikd.dev.server.Model.Town;
 import kazikd.dev.server.Service.LookupService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
