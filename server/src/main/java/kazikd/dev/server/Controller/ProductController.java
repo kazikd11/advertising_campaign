@@ -29,6 +29,6 @@ public class ProductController {
     public ResponseEntity<String> deleteProduct(@RequestHeader("X-USER-ID") Long userId,
                                                 @PathVariable Long productId) {
         productService.deleteProduct(userId, productId);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Product deleted successfully");
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Product deleted successfully");
     }
 }

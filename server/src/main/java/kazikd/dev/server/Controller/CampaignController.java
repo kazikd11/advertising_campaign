@@ -41,6 +41,6 @@ public class CampaignController {
     @DeleteMapping("/{campaignId}")
     public ResponseEntity<String> deleteCampaign(@RequestHeader("X-USER-ID") Long userId, @PathVariable Long campaignId) {
         campaignService.deleteCampaign(userId, campaignId);
-        return ResponseEntity.status(HttpStatus.OK).body("Campaign deleted successfully");
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Campaign deleted successfully");
     }
 }
