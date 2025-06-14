@@ -1,7 +1,8 @@
 package kazikd.dev.server.Service;
 
-import kazikd.dev.server.Exceptions.ProductNotFoundException;
-import kazikd.dev.server.Exceptions.UserNotFoundException;
+import kazikd.dev.server.DTOs.ProductDTO;
+import kazikd.dev.server.Exceptions.NotFoundException;
+import kazikd.dev.server.Exceptions.UserException;
 import kazikd.dev.server.Model.Product;
 import kazikd.dev.server.Model.User;
 import kazikd.dev.server.Repository.ProductRepo;
@@ -19,23 +20,24 @@ public class ProductService {
         this.userRepo = userRepo;
     }
 
-    public void createProductForUser(Long userId, String name) {
+    public ProductDTO createProductForUser(Long userId, String name) {
         User user = userRepo.findById(userId)
-                .orElseThrow(() -> new UserNotFoundException("User not found"));
+                .orElseThrow(() -> new NotFoundException("User not found"));
 
         Product product = new Product();
         product.setName(name);
         product.setUser(user);
 
-        productRepo.save(product);
+        return ProductDTO.fromProduct(productRepo.save(product));
     }
+
 
     public void deleteProduct(Long userId, Long productId) {
         Product product = productRepo.findById(productId)
-                .orElseThrow(() -> new ProductNotFoundException("Product not found"));
+                .orElseThrow(() -> new NotFoundException("Product not found"));
 
         if (!product.getUser().getId().equals(userId)) {
-            throw new UserNotFoundException("User does not own this product");
+            throw new UserException("User does not own this product");
         }
 
         productRepo.delete(product);

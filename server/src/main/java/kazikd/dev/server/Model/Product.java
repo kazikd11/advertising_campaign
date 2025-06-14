@@ -5,11 +5,13 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
-@Data
-@NoArgsConstructor
+@Getter
+@Setter
 @Table(name = "products")
 public class Product {
 
@@ -18,12 +20,12 @@ public class Product {
     private Long id;
 
     @NotBlank
+    @Column(unique = true, nullable = false)
     private String name;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     @NotNull
-    @JsonIgnore
     private User user;
 
     @OneToOne(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)

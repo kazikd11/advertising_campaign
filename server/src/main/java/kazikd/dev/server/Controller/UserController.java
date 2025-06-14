@@ -1,5 +1,6 @@
 package kazikd.dev.server.Controller;
 
+import kazikd.dev.server.DTOs.UserDetailsDTO;
 import kazikd.dev.server.Model.User;
 import kazikd.dev.server.DTOs.UserSummaryDTO;
 import kazikd.dev.server.Service.UserService;
@@ -13,6 +14,7 @@ import java.util.List;
 //demo controller, no authentication, no security, just to use user_id in other requests
 @RestController
 @RequestMapping("/api/users")
+@CrossOrigin(origins = "*")
 public class UserController {
     private final UserService userService;
 
@@ -23,24 +25,25 @@ public class UserController {
     @GetMapping
     public ResponseEntity<List<UserSummaryDTO>> getAllUsers() {
         List<UserSummaryDTO> users = userService.getAllUsers();
-        return ResponseEntity.ok(users);
+        return ResponseEntity.status(HttpStatus.OK).body(users);
     }
 
     @PostMapping
-    public ResponseEntity<String> createUser(@RequestParam String username) {
-        userService.createUser(username);
-        return ResponseEntity.status(HttpStatus.CREATED).body("User created successfully");
+    public ResponseEntity<UserDetailsDTO> createUser(@RequestParam String username) {
+        UserDetailsDTO user = userService.createUser(username);
+        return ResponseEntity.status(HttpStatus.CREATED).body(user);
     }
 
     @GetMapping("/me")
-    public ResponseEntity<User> getCurrentUserAndData(@RequestHeader("X-USER-ID") Long userId) {
-        User user = userService.getUserById(userId);
-        return ResponseEntity.ok(user);
+    public ResponseEntity<UserDetailsDTO> getCurrentUserAndData(@RequestHeader("X-USER-ID") Long userId) {
+        UserDetailsDTO user = userService.getUserDetailsById(userId);
+        return ResponseEntity.status(HttpStatus.OK).body(user);
     }
 
     @PutMapping("/add-funds")
-    public ResponseEntity<User> addFunds(@RequestHeader("X-USER-ID") Long userId,
-                                         @RequestParam BigDecimal amount) {
-        return ResponseEntity.ok(userService.addFunds(userId, amount));
+    public ResponseEntity<UserDetailsDTO> addFunds(@RequestHeader("X-USER-ID") Long userId,
+                                                   @RequestParam BigDecimal amount) {
+        UserDetailsDTO user = userService.addFunds(userId, amount);
+        return ResponseEntity.status(HttpStatus.OK).body(user);
     }
 }

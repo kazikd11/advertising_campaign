@@ -11,22 +11,16 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class ControllerAdvice {
 
-    @ExceptionHandler(UserNotFoundException.class)
-    public ResponseEntity<String> handleUserNotFoundException(UserNotFoundException e) {
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<String> handleUserNotFoundException(NotFoundException e) {
         log.warn("User not found: {}", e.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
     }
 
-    @ExceptionHandler(UserBalanceException.class)
-    public ResponseEntity<String> handleUserBalanceException(UserBalanceException e) {
+    @ExceptionHandler(UserException.class)
+    public ResponseEntity<String> handleUserBalanceException(UserException e) {
         log.warn("User balance error: {}", e.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-    }
-
-    @ExceptionHandler(ProductNotFoundException.class)
-    public ResponseEntity<String> handleProductNotFoundException(ProductNotFoundException e) {
-        log.warn("Product not found: {}", e.getMessage());
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
     }
 
     @ExceptionHandler(UserAlreadyExistsException.class)
