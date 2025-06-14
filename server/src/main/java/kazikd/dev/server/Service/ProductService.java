@@ -3,6 +3,7 @@ package kazikd.dev.server.Service;
 import kazikd.dev.server.DTOs.ProductDTO;
 import kazikd.dev.server.Exceptions.NotFoundException;
 import kazikd.dev.server.Exceptions.UserException;
+import kazikd.dev.server.Model.Campaign;
 import kazikd.dev.server.Model.Product;
 import kazikd.dev.server.Model.User;
 import kazikd.dev.server.Repository.ProductRepo;
@@ -38,6 +39,11 @@ public class ProductService {
 
         if (!product.getUser().getId().equals(userId)) {
             throw new UserException("User does not own this product");
+        }
+
+        Campaign campaign = product.getCampaign();
+        if (campaign != null) {
+            throw new UserException("Cannot delete product with a campaign");
         }
 
         productRepo.delete(product);
