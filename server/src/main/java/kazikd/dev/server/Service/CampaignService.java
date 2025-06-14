@@ -1,11 +1,13 @@
 package kazikd.dev.server.Service;
 
+import jakarta.persistence.EntityManager;
 import kazikd.dev.server.DTOs.CampaignRequestDTO;
 import kazikd.dev.server.DTOs.CampaignResponseDTO;
 import kazikd.dev.server.Exceptions.NotFoundException;
 import kazikd.dev.server.Exceptions.UserException;
 import kazikd.dev.server.Model.*;
 import kazikd.dev.server.Repository.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +25,9 @@ public class CampaignService {
     private final TownRepo townRepo;
     private final KeywordRepo keywordRepo;
 
+    @Autowired
+    private EntityManager entityManager;
+
     public CampaignService(CampaignRepo campaignRepo, ProductRepo productRepo, UserRepo userRepo, TownRepo townRepo, KeywordRepo keywordRepo) {
         this.campaignRepo = campaignRepo;
         this.productRepo = productRepo;
@@ -39,12 +44,16 @@ public class CampaignService {
 
     @Transactional
     public void deleteCampaign(Long userId, Long campaignId) {
-
         Campaign campaign = getAndValidateCampaign(campaignId, userId);
 
         User user = campaign.getProduct().getUser();
         user.setBalance(user.getBalance().add(campaign.getFund()));
         userRepo.save(user);
+
+        // detach the campaign from the product before deleting
+        Product product = campaign.getProduct();
+        product.setCampaign(null);
+        productRepo.save(product);
 
         campaignRepo.delete(campaign);
     }

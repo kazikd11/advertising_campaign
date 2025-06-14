@@ -53,4 +53,5 @@ public class Campaign {
     @NotNull
     @Min(1)
     private Integer radius;
+
 }
